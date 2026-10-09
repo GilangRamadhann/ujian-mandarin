@@ -1,0 +1,3863 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <base target="_self">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>中文考试 - Ujian Bahasa Mandarin</title>
+
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f1f2f5;
+      color: #14213d;
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+    }
+
+
+    /* =========================================
+       GLOBAL
+       ========================================= */
+
+    .container {
+      width: min(
+        100% - 28px,
+        985px
+      );
+      margin: 0 auto;
+    }
+
+
+    .hidden {
+      display: none !important;
+    }
+
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+
+    button {
+      cursor: pointer;
+    }
+
+
+    /* =========================================
+       HEADER
+       ========================================= */
+
+    .main-header {
+      margin-top: 28px;
+      background: white;
+
+      border-top:
+        4px solid #ef2b2d;
+
+      border-radius:
+        20px;
+
+      padding:
+        32px 24px 30px;
+
+      text-align: center;
+
+      box-shadow:
+        0 4px 14px
+        rgba(0,0,0,.04);
+    }
+
+
+    .main-title {
+      margin: 0;
+
+      font-size:
+        clamp(27px, 4vw, 38px);
+
+      font-weight:
+        800;
+
+      color:
+        #101c34;
+    }
+
+
+    .main-subtitle {
+      margin-top: 12px;
+
+      font-size:
+        20px;
+
+      color:
+        #737b8c;
+    }
+
+
+    /* =========================================
+       CARD
+       ========================================= */
+
+    .card {
+      margin-top: 36px;
+
+      background:
+        #ffffff;
+
+      border-radius:
+        18px;
+
+      padding:
+        38px;
+
+      box-shadow:
+        0 5px 18px
+        rgba(0,0,0,.05);
+    }
+
+
+    .card-title {
+      margin: 0;
+
+      font-size:
+        27px;
+
+      font-weight:
+        800;
+
+      padding-bottom:
+        15px;
+
+      border-bottom:
+        1px solid #e3e5e9;
+    }
+
+
+    /* =========================================
+       FORM
+       ========================================= */
+
+    .form-group {
+      margin-top:
+        28px;
+    }
+
+
+    label {
+      display:
+        block;
+
+      margin-bottom:
+        9px;
+
+      font-size:
+        17px;
+
+      color:
+        #14213d;
+    }
+
+
+    input,
+    select {
+      width:
+        100%;
+
+      height:
+        60px;
+
+      border:
+        1px solid #d4d8df;
+
+      border-radius:
+        10px;
+
+      padding:
+        0 17px;
+
+      color:
+        #17233c;
+
+      background:
+        #fff;
+
+      outline:
+        none;
+    }
+
+
+    input::placeholder {
+      color:
+        #9aa2b1;
+    }
+
+
+    input:focus,
+    select:focus {
+      border-color:
+        #ef2b2d;
+
+      box-shadow:
+        0 0 0 3px
+        rgba(239,43,45,.1);
+    }
+
+
+    /* =========================================
+       RED BUTTON
+       ========================================= */
+
+    .btn-red {
+      width:
+        100%;
+
+      height:
+        58px;
+
+      border:
+        0;
+
+      border-radius:
+        9px;
+
+      background:
+        #ed2629;
+
+      color:
+        white;
+
+      font-size:
+        20px;
+
+      font-weight:
+        800;
+
+      box-shadow:
+        0 3px 7px
+        rgba(0,0,0,.13);
+
+      transition:
+        .2s;
+    }
+
+
+    .btn-red:hover {
+      background:
+        #d91e21;
+
+      transform:
+        translateY(-1px);
+    }
+
+
+    .btn-red:disabled {
+      opacity:
+        .55;
+
+      cursor:
+        not-allowed;
+
+      transform:
+        none;
+    }
+
+
+    .start-button {
+      margin-top:
+        20px;
+    }
+
+
+    /* =========================================
+       EXAM TOP BAR
+       ========================================= */
+
+    .exam-top {
+      position:
+        sticky;
+
+      top:
+        0;
+
+      z-index:
+        20;
+
+      background:
+        #f1f2f5;
+
+      padding:
+        14px 0 10px;
+    }
+
+
+    .exam-top-inner {
+      background:
+        white;
+
+      border-radius:
+        15px;
+
+      padding:
+        15px 18px;
+
+      box-shadow:
+        0 3px 10px
+        rgba(0,0,0,.05);
+    }
+
+
+    .top-row {
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        15px;
+    }
+
+
+    .section-label {
+      font-weight:
+        800;
+
+      color:
+        #ed2629;
+
+      font-size:
+        15px;
+    }
+
+
+    .question-number {
+      font-weight:
+        700;
+
+      color:
+        #6c7482;
+
+      font-size:
+        14px;
+    }
+
+
+    .progress {
+      margin-top:
+        11px;
+
+      width:
+        100%;
+
+      height:
+        8px;
+
+      background:
+        #e4e6eb;
+
+      border-radius:
+        999px;
+
+      overflow:
+        hidden;
+    }
+
+
+    .progress-fill {
+      height:
+        100%;
+
+      width:
+        0%;
+
+      background:
+        #ed2629;
+
+      transition:
+        width .25s;
+    }
+
+
+    /* =========================================
+       EXAM CONTENT
+       ========================================= */
+
+    .exam-content {
+      padding:
+        15px 0 120px;
+    }
+
+
+    .question-card {
+      background:
+        white;
+
+      border-radius:
+        18px;
+
+      padding:
+        30px;
+
+      box-shadow:
+        0 5px 18px
+        rgba(0,0,0,.05);
+    }
+
+
+    .instruction {
+      color:
+        #697283;
+
+      font-size:
+        16px;
+
+      line-height:
+        1.6;
+
+      margin:
+        0 0 20px;
+    }
+
+
+    .question-chinese {
+      text-align:
+        center;
+
+      font-size:
+        clamp(30px, 5vw, 45px);
+
+      font-weight:
+        700;
+
+      color:
+        #101c34;
+
+      margin:
+        20px 0 10px;
+
+      line-height:
+        1.45;
+    }
+
+
+    .question-pinyin {
+      text-align:
+        center;
+
+      color:
+        #737b8c;
+
+      font-size:
+        18px;
+
+      font-style:
+        italic;
+
+      margin-bottom:
+        25px;
+    }
+
+
+    /* =========================================
+       AUDIO
+       ========================================= */
+
+    .audio-button {
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      gap:
+        10px;
+
+      min-height:
+        56px;
+
+      padding:
+        0 25px;
+
+      margin:
+        15px auto;
+
+      border:
+        2px solid #ed2629;
+
+      border-radius:
+        10px;
+
+      background:
+        #fff;
+
+      color:
+        #ed2629;
+
+      font-weight:
+        800;
+
+      font-size:
+        17px;
+    }
+
+
+    .audio-button:hover {
+      background:
+        #fff1f1;
+    }
+
+
+    .record-area {
+      margin-top:
+        28px;
+
+      padding:
+        23px;
+
+      border:
+        1px solid #e3e5e9;
+
+      border-radius:
+        15px;
+
+      background:
+        #fafafa;
+
+      text-align:
+        center;
+    }
+
+
+    .record-title {
+      font-size:
+        18px;
+
+      font-weight:
+        800;
+
+      margin-bottom:
+        8px;
+    }
+
+
+    .record-status {
+      min-height:
+        25px;
+
+      color:
+        #727b8b;
+
+      font-size:
+        14px;
+
+      margin-bottom:
+        14px;
+    }
+
+
+    .record-buttons {
+      display:
+        flex;
+
+      justify-content:
+        center;
+
+      flex-wrap:
+        wrap;
+
+      gap:
+        10px;
+    }
+
+
+    .record-button {
+      border:
+        none;
+
+      border-radius:
+        9px;
+
+      padding:
+        13px 21px;
+
+      color:
+        white;
+
+      background:
+        #ef2b2d;
+
+      font-weight:
+        800;
+    }
+
+
+    .record-button.stop {
+      background:
+        #333b4f;
+    }
+
+
+    .record-button:disabled {
+      opacity:
+        .45;
+
+      cursor:
+        not-allowed;
+    }
+
+
+    audio {
+      width:
+        100%;
+
+      margin-top:
+        15px;
+    }
+
+
+    /* =========================================
+       PART 2
+       ========================================= */
+
+    .image-box {
+      display:
+        flex;
+
+      justify-content:
+        center;
+
+      align-items:
+        center;
+
+      min-height:
+        280px;
+
+      margin:
+        20px 0;
+
+      padding:
+        15px;
+
+      background:
+        #fafafa;
+
+      border:
+        1px solid #e5e6ea;
+
+      border-radius:
+        15px;
+    }
+
+
+    .question-image {
+      max-width:
+        100%;
+
+      max-height:
+        420px;
+
+      object-fit:
+        contain;
+
+      border-radius:
+        10px;
+    }
+
+
+    .answer-grid {
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap:
+        15px;
+
+      margin-top:
+        25px;
+    }
+
+
+    .answer-button {
+      min-height:
+        70px;
+
+      border:
+        2px solid #dfe2e7;
+
+      background:
+        white;
+
+      border-radius:
+        12px;
+
+      font-size:
+        20px;
+
+      font-weight:
+        800;
+
+      color:
+        #263249;
+    }
+
+
+    .answer-button:hover {
+      border-color:
+        #ed2629;
+    }
+
+
+    .answer-button.selected {
+      border-color:
+        #ed2629;
+
+      background:
+        #fff0f0;
+
+      color:
+        #ed2629;
+    }
+
+
+    /* =========================================
+       PART 3
+       ========================================= */
+
+    .sentence-box {
+      text-align:
+        center;
+
+      margin:
+        25px 0;
+
+      padding:
+        25px;
+
+      background:
+        #fafafa;
+
+      border:
+        1px solid #e5e6ea;
+
+      border-radius:
+        14px;
+    }
+
+
+    .sentence {
+      font-size:
+        clamp(25px, 4vw, 38px);
+
+      line-height:
+        1.7;
+
+      font-weight:
+        700;
+    }
+
+
+    .blank {
+      color:
+        #ed2629;
+
+      border-bottom:
+        3px solid #ed2629;
+
+      padding:
+        0 30px;
+    }
+
+
+    .options-grid {
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap:
+        12px;
+
+      margin-top:
+        20px;
+    }
+
+
+    .option-button {
+      padding:
+        17px;
+
+      border:
+        2px solid #dfe2e7;
+
+      border-radius:
+        11px;
+
+      background:
+        white;
+
+      text-align:
+        left;
+
+      color:
+        #1e2940;
+    }
+
+
+    .option-button strong {
+      color:
+        #ed2629;
+
+      margin-right:
+        8px;
+    }
+
+
+    .option-button.selected {
+      border-color:
+        #ed2629;
+
+      background:
+        #fff0f0;
+    }
+
+
+    .option-pinyin {
+      color:
+        #727b8b;
+
+      font-size:
+        14px;
+
+      margin-left:
+        25px;
+    }
+
+
+    /* =========================================
+       NAVIGATION
+       ========================================= */
+
+    .exam-navigation {
+      position:
+        fixed;
+
+      left:
+        0;
+
+      right:
+        0;
+
+      bottom:
+        0;
+
+      z-index:
+        30;
+
+      background:
+        rgba(255,255,255,.97);
+
+      border-top:
+        1px solid #dddfe4;
+
+      padding:
+        13px 15px;
+
+      box-shadow:
+        0 -4px 15px
+        rgba(0,0,0,.06);
+    }
+
+
+    .nav-inner {
+      width:
+        min(
+          100%,
+          985px
+        );
+
+      margin:
+        0 auto;
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      gap:
+        12px;
+    }
+
+
+    .nav-button {
+      min-width:
+        130px;
+
+      height:
+        50px;
+
+      border-radius:
+        9px;
+
+      border:
+        1px solid #d8dbe0;
+
+      background:
+        white;
+
+      color:
+        #30394b;
+
+      font-weight:
+        800;
+    }
+
+
+    .nav-button.next {
+      background:
+        #ed2629;
+
+      border-color:
+        #ed2629;
+
+      color:
+        white;
+    }
+
+
+    .nav-button:disabled {
+      opacity:
+        .4;
+
+      cursor:
+        not-allowed;
+    }
+
+
+    /* =========================================
+       LOADING
+       ========================================= */
+
+    .loading-overlay {
+      position:
+        fixed;
+
+      inset:
+        0;
+
+      z-index:
+        100;
+
+      background:
+        rgba(20,26,40,.55);
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+    }
+
+
+    .loading-box {
+      background:
+        white;
+
+      padding:
+        30px;
+
+      border-radius:
+        15px;
+
+      text-align:
+        center;
+
+      min-width:
+        260px;
+    }
+
+
+    .spinner {
+      width:
+        40px;
+
+      height:
+        40px;
+
+      border:
+        4px solid #eee;
+
+      border-top-color:
+        #ed2629;
+
+      border-radius:
+        50%;
+
+      animation:
+        spin 1s linear infinite;
+
+      margin:
+        0 auto 15px;
+    }
+
+
+    @keyframes spin {
+
+      to {
+        transform:
+          rotate(360deg);
+      }
+
+    }
+
+
+    /* =========================================
+       RESULT MODAL
+       ========================================= */
+
+    .modal {
+      position:
+        fixed;
+
+      inset:
+        0;
+
+      z-index:
+        200;
+
+      background:
+        rgba(0,0,0,.55);
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      padding:
+        20px;
+    }
+
+
+    .modal-box {
+      width:
+        min(
+          100%,
+          560px
+        );
+
+      background:
+        white;
+
+      border-radius:
+        20px;
+
+      padding:
+        30px;
+
+      max-height:
+        90vh;
+
+      overflow:
+        auto;
+    }
+
+
+    .result-title {
+      text-align:
+        center;
+
+      margin:
+        0 0 25px;
+
+      font-size:
+        27px;
+    }
+
+
+    .result-row {
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      gap:
+        20px;
+
+      padding:
+        15px 0;
+
+      border-bottom:
+        1px solid #e5e6ea;
+
+      font-size:
+        17px;
+    }
+
+
+    .result-row.total {
+      font-size:
+        21px;
+
+      font-weight:
+        800;
+
+      color:
+        #ed2629;
+    }
+
+
+    .pending-note {
+      margin-top:
+        20px;
+
+      padding:
+        14px;
+
+      border-radius:
+        10px;
+
+      background:
+        #fff6e8;
+
+      color:
+        #7b551c;
+
+      font-size:
+        14px;
+
+      line-height:
+        1.5;
+    }
+
+
+    /* =========================================
+       TOAST
+       ========================================= */
+
+    .toast {
+      position:
+        fixed;
+
+      left:
+        50%;
+
+      bottom:
+        85px;
+
+      transform:
+        translateX(-50%);
+
+      z-index:
+        300;
+
+      background:
+        #222a3b;
+
+      color:
+        white;
+
+      padding:
+        12px 20px;
+
+      border-radius:
+        10px;
+
+      max-width:
+        calc(100% - 30px);
+
+      text-align:
+        center;
+
+      box-shadow:
+        0 5px 15px
+        rgba(0,0,0,.2);
+    }
+
+
+    /* =========================================
+       MOBILE
+       ========================================= */
+
+    @media (max-width: 650px) {
+
+      .container {
+        width:
+          min(
+            100% - 18px,
+            985px
+          );
+      }
+
+
+      .main-header {
+        margin-top:
+          10px;
+
+        padding:
+          25px 15px;
+      }
+
+
+      .card {
+        margin-top:
+          15px;
+
+        padding:
+          22px 18px;
+      }
+
+
+      .card-title {
+        font-size:
+          23px;
+      }
+
+
+      .question-card {
+        padding:
+          21px 16px;
+      }
+
+
+      .answer-grid,
+      .options-grid {
+        grid-template-columns:
+          1fr;
+      }
+
+
+      .nav-button {
+        min-width:
+          0;
+
+        flex:
+          1;
+      }
+
+
+      .question-chinese {
+        font-size:
+          30px;
+      }
+
+
+      .sentence {
+        font-size:
+          26px;
+      }
+
+    }
+
+  </style>
+
+
+<!-- Bridge Apps Script: komunikasi backend, bukan tampilan untuk peserta -->
+<iframe id="gasBridge" title="Koneksi ujian" aria-hidden="true"
+  style="position:absolute;width:1px;height:1px;left:-10000px;border:0"
+  src="https://script.google.com/macros/s/AKfycbxpRiwLQk9gJKrnVZThVcq-bYvUaOQLJvXT1XM44N6B2YjVA0eQTes5xVgxoDMYB9T7Cg/exec?page=bridge"></iframe>
+
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     HEADER
+     ================================================== -->
+
+<div
+  class="container"
+  id="headerContainer"
+>
+
+  <div class="main-header">
+
+    <h1 class="main-title">
+      中文考试 (Ujian Bahasa Mandarin)
+    </h1>
+
+    <div class="main-subtitle">
+      Tingkat Dasar
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- ==================================================
+     REGISTRASI
+     ================================================== -->
+
+<div
+  class="container"
+  id="registrationView"
+>
+
+  <div class="card">
+
+    <h2 class="card-title">
+      Informasi Peserta
+    </h2>
+
+
+    <div class="form-group">
+
+      <label for="name">
+        Nama Lengkap
+      </label>
+
+      <input
+        type="text"
+        id="name"
+        placeholder="Masukkan nama Anda"
+        autocomplete="name"
+      >
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label for="className">
+        Kelas
+      </label>
+
+      <select id="className">
+
+        <option value="">
+          Pilih Kelas...
+        </option>
+
+        <option value="A">
+          Kelas A
+        </option>
+
+        <option value="B">
+          Kelas B
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <button
+      id="startButton"
+      class="btn-red start-button"
+    >
+      Mulai Ujian
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<!-- ==================================================
+     UJIAN
+     ================================================== -->
+
+<div
+  id="examView"
+  class="hidden"
+>
+
+
+  <!-- TOP BAR -->
+
+  <div class="exam-top">
+
+    <div class="container">
+
+      <div class="exam-top-inner">
+
+        <div class="top-row">
+
+          <div
+            id="sectionLabel"
+            class="section-label"
+          >
+            Bagian I
+          </div>
+
+          <div
+            id="questionNumber"
+            class="question-number"
+          >
+            Soal 1 / 15
+          </div>
+
+        </div>
+
+
+        <div class="progress">
+
+          <div
+            id="progressFill"
+            class="progress-fill"
+          ></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- QUESTION -->
+
+  <main class="container exam-content">
+
+    <div
+      id="questionCard"
+      class="question-card"
+    >
+    </div>
+
+  </main>
+
+
+
+  <!-- NAVIGATION -->
+
+  <div class="exam-navigation">
+
+    <div class="nav-inner">
+
+      <button
+        id="previousButton"
+        class="nav-button"
+      >
+        ← Sebelumnya
+      </button>
+
+
+      <button
+        id="nextButton"
+        class="nav-button next"
+      >
+        Berikutnya →
+      </button>
+
+    </div>
+
+  </div>
+
+
+</div>
+
+
+
+<!-- ==================================================
+     RESULT MODAL
+     ================================================== -->
+
+<div
+  id="resultModal"
+  class="modal hidden"
+>
+
+  <div class="modal-box">
+
+    <h2 class="result-title">
+      Ujian Berhasil Disimpan
+    </h2>
+
+
+    <div class="result-row">
+
+      <span>
+        Bagian I
+      </span>
+
+      <strong id="resultPart1">
+        Menunggu penilaian
+      </strong>
+
+    </div>
+
+
+    <div class="result-row">
+
+      <span>
+        Bagian II
+      </span>
+
+      <strong id="resultPart2">
+        0
+      </strong>
+
+    </div>
+
+
+    <div class="result-row">
+
+      <span>
+        Bagian III
+      </span>
+
+      <strong id="resultPart3">
+        0
+      </strong>
+
+    </div>
+
+
+    <div class="result-row total">
+
+      <span>
+        Total Sementara
+      </span>
+
+      <strong id="resultTotal">
+        0
+      </strong>
+
+    </div>
+
+
+    <div class="pending-note">
+
+      Bagian I dinilai oleh guru berdasarkan
+      <strong>lafal dan nada</strong>.
+      Nilai setiap soal adalah
+      <strong>100, 70, atau 50</strong>.
+
+      <br><br>
+
+      Setelah guru melakukan penilaian,
+      nilai Bagian I dan total akhir akan
+      diperbarui pada dashboard guru.
+
+    </div>
+
+
+    <button
+      class="btn-red"
+      style="margin-top:20px"
+      onclick="closeResult()"
+    >
+      Selesai
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<!-- ==================================================
+     LOADING
+     ================================================== -->
+
+<div
+  id="loadingOverlay"
+  class="loading-overlay hidden"
+>
+
+  <div class="loading-box">
+
+    <div class="spinner"></div>
+
+    <strong id="loadingText">
+      Memproses...
+    </strong>
+
+  </div>
+
+</div>
+
+
+
+<!-- ==================================================
+     TOAST
+     ================================================== -->
+
+<div
+  id="toast"
+  class="toast hidden"
+></div>
+
+
+
+<script>
+
+/* =====================================================
+   BRIDGE GITHUB PAGES <-> GOOGLE APPS SCRIPT
+   Mempertahankan pola google.script.run dari halaman asli.
+   ===================================================== */
+const GAS_BRIDGE_ORIGIN = 'https://script.google.com';
+const gasBridgeFrame = document.getElementById('gasBridge');
+const gasPendingCalls = new Map();
+let gasCallCounter = 0;
+let gasBridgeReady = false;
+
+function gasCall(method, args) {
+  return new Promise((resolve, reject) => {
+    if (!gasBridgeFrame || !gasBridgeFrame.contentWindow) {
+      reject(new Error('Koneksi ke server ujian belum tersedia. Muat ulang halaman.'));
+      return;
+    }
+    const id = 'rpc-' + Date.now() + '-' + (++gasCallCounter);
+    const timeout = setTimeout(() => {
+      gasPendingCalls.delete(id);
+      reject(new Error('Server terlalu lama merespons. Periksa koneksi lalu coba lagi.'));
+    }, 120000);
+    gasPendingCalls.set(id, { resolve, reject, timeout });
+    gasBridgeFrame.contentWindow.postMessage({
+      channel: 'mandarin-exam', type: 'rpc', id, method, args
+    }, '*');
+  });
+}
+
+window.addEventListener('message', event => {
+  if (!gasBridgeFrame || event.source !== gasBridgeFrame.contentWindow) return;
+  const msg = event.data;
+  if (!msg || msg.channel !== 'mandarin-exam' || msg.type !== 'rpc-result') return;
+  const pending = gasPendingCalls.get(msg.id);
+  if (!pending) return;
+  clearTimeout(pending.timeout);
+  gasPendingCalls.delete(msg.id);
+  if (msg.success) pending.resolve(msg.result);
+  else pending.reject(new Error(msg.error || 'Permintaan ke server gagal.'));
+});
+
+function createGoogleScriptRunner() {
+  const state = { success: null, failure: null };
+  let runner;
+  runner = new Proxy({}, {
+    get(_target, property) {
+      if (property === 'withSuccessHandler') return fn => { state.success = fn; return runner; };
+      if (property === 'withFailureHandler') return fn => { state.failure = fn; return runner; };
+      if (property === 'withUserObject') return () => runner;
+      if (typeof property !== 'string') return undefined;
+      return (...args) => {
+        gasCall(property, args).then(result => {
+          if (typeof state.success === 'function') state.success(result);
+        }).catch(error => {
+          if (typeof state.failure === 'function') state.failure(error);
+          else console.error('Apps Script bridge:', error);
+        });
+      };
+    }
+  });
+  return runner;
+}
+
+// Adapter agar fungsi peserta yang lama tidak perlu ditulis ulang satu per satu.
+window.google = window.google || {};
+window.google.script = window.google.script || {};
+Object.defineProperty(window.google.script, 'run', {
+  configurable: true, get: createGoogleScriptRunner
+});
+
+
+
+
+/* =====================================================
+   STATE
+   ===================================================== */
+
+let examData = null;
+
+let imageData = {};
+
+let questions = [];
+
+let currentIndex = 0;
+
+let sessionId = '';
+
+let participantName = '';
+
+let participantClass = '';
+
+let submitted = false;
+
+let uploadingCount = 0;
+
+
+/* Jawaban */
+
+const answers = {
+
+  part1Recordings: {},
+
+  part2Answers: {},
+
+  part3Answers: {}
+
+};
+
+
+/* Recording */
+
+let mediaRecorder = null;
+
+let mediaStream = null;
+
+let recordingChunks = [];
+
+let recordingQuestionId = null;
+
+let recordingTimer = null;
+
+let recordingSeconds = 0;
+
+
+/* Speech */
+
+let voices = [];
+
+
+/* =====================================================
+   INIT
+   ===================================================== */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  function() {
+
+    loadVoices();
+
+    if (
+      'speechSynthesis' in window
+    ) {
+
+      window
+        .speechSynthesis
+        .onvoiceschanged =
+        loadVoices;
+
+    }
+
+
+    document
+      .getElementById(
+        'startButton'
+      )
+      .addEventListener(
+        'click',
+        startExam
+      );
+
+
+    document
+      .getElementById(
+        'previousButton'
+      )
+      .addEventListener(
+        'click',
+        previousQuestion
+      );
+
+
+    document
+      .getElementById(
+        'nextButton'
+      )
+      .addEventListener(
+        'click',
+        nextQuestion
+      );
+
+  }
+);
+
+
+/* =====================================================
+   SPEECH VOICES
+   ===================================================== */
+
+function loadVoices() {
+
+  if (
+    'speechSynthesis' in window
+  ) {
+
+    voices =
+      window
+        .speechSynthesis
+        .getVoices();
+
+  }
+
+}
+
+
+/* =====================================================
+   PLAY AUDIO / TTS
+   ===================================================== */
+
+function speakChinese(text) {
+
+  if (
+    !('speechSynthesis' in window)
+  ) {
+
+    showToast(
+      'Browser ini tidak mendukung audio suara.'
+    );
+
+    return;
+  }
+
+
+  window
+    .speechSynthesis
+    .cancel();
+
+
+  const utterance =
+    new SpeechSynthesisUtterance(
+      text
+    );
+
+
+  utterance.lang =
+    'zh-CN';
+
+
+  utterance.rate =
+    0.72;
+
+
+  utterance.pitch =
+    1;
+
+
+  const chineseVoice =
+    voices.find(
+      function(v) {
+
+        return /^zh/i.test(
+          v.lang
+        );
+
+      }
+    );
+
+
+  if (chineseVoice) {
+
+    utterance.voice =
+      chineseVoice;
+
+  }
+
+
+  window
+    .speechSynthesis
+    .speak(
+      utterance
+    );
+
+}
+
+
+/* =====================================================
+   START EXAM
+   ===================================================== */
+
+function startExam() {
+
+  const name =
+    document
+      .getElementById(
+        'name'
+      )
+      .value
+      .trim();
+
+
+  const className =
+    document
+      .getElementById(
+        'className'
+      )
+      .value;
+
+
+  if (!name) {
+
+    showToast(
+      'Silakan isi nama lengkap.'
+    );
+
+    return;
+  }
+
+
+  if (!className) {
+
+    showToast(
+      'Silakan pilih kelas.'
+    );
+
+    return;
+  }
+
+
+  participantName =
+    name;
+
+  participantClass =
+    className;
+
+
+  const button =
+    document
+      .getElementById(
+        'startButton'
+      );
+
+
+  button.disabled =
+    true;
+
+  button.textContent =
+    'Menyiapkan ujian...';
+
+
+  showLoading(
+    'Menyiapkan ujian...'
+  );
+
+
+  google.script.run
+
+    .withSuccessHandler(
+      function(result) {
+
+        sessionId =
+          result.sessionId;
+
+
+        loadExamData();
+
+      }
+    )
+
+    .withFailureHandler(
+      function(error) {
+
+        hideLoading();
+
+        button.disabled =
+          false;
+
+        button.textContent =
+          'Mulai Ujian';
+
+
+        showToast(
+          error.message ||
+          'Gagal memulai ujian.'
+        );
+
+      }
+    )
+
+    .startExam(
+      name,
+      className
+    );
+
+}
+
+
+/* =====================================================
+   LOAD DATA SOAL
+   ===================================================== */
+
+function loadExamData() {
+
+  google.script.run
+
+    .withSuccessHandler(
+      function(data) {
+
+        examData =
+          data;
+
+
+        buildQuestions();
+
+
+        google.script.run
+
+          .withSuccessHandler(
+            function(images) {
+
+              imageData =
+                images || {};
+
+
+              hideLoading();
+
+              document
+                .getElementById(
+                  'registrationView'
+                )
+                .classList
+                .add(
+                  'hidden'
+                );
+
+
+              document
+                .getElementById(
+                  'headerContainer'
+                )
+                .classList
+                .add(
+                  'hidden'
+                );
+
+
+              document
+                .getElementById(
+                  'examView'
+                )
+                .classList
+                .remove(
+                  'hidden'
+                );
+
+
+              renderQuestion();
+
+            }
+          )
+
+          .withFailureHandler(
+            function() {
+
+              hideLoading();
+
+
+              document
+                .getElementById(
+                  'registrationView'
+                )
+                .classList
+                .add(
+                  'hidden'
+                );
+
+
+              document
+                .getElementById(
+                  'headerContainer'
+                )
+                .classList
+                .add(
+                  'hidden'
+                );
+
+
+              document
+                .getElementById(
+                  'examView'
+                )
+                .classList
+                .remove(
+                  'hidden'
+                );
+
+
+              renderQuestion();
+
+            }
+          )
+
+          .getImageDataUrls();
+
+      }
+    )
+
+    .withFailureHandler(
+      function(error) {
+
+        hideLoading();
+
+        showToast(
+          error.message ||
+          'Gagal memuat materi ujian.'
+        );
+
+      }
+    )
+
+    .getExamData();
+
+}
+
+
+/* =====================================================
+   BUILD QUESTIONS
+   ===================================================== */
+
+function buildQuestions() {
+
+  questions = [];
+
+
+  examData.part1.forEach(
+    function(q) {
+
+      questions.push({
+
+        section:
+          1,
+
+        number:
+          q.id,
+
+        data:
+          q
+
+      });
+
+    }
+  );
+
+
+  examData.part2.forEach(
+    function(q) {
+
+      questions.push({
+
+        section:
+          2,
+
+        number:
+          q.id,
+
+        data:
+          q
+
+      });
+
+    }
+  );
+
+
+  examData.part3.questions.forEach(
+    function(q) {
+
+      questions.push({
+
+        section:
+          3,
+
+        number:
+          q.id,
+
+        data:
+          q
+
+      });
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   RENDER QUESTION
+   ===================================================== */
+
+function renderQuestion() {
+
+  if (!questions.length) {
+    return;
+  }
+
+
+  const item =
+    questions[currentIndex];
+
+
+  updateTopBar(
+    item
+  );
+
+
+  const card =
+    document
+      .getElementById(
+        'questionCard'
+      );
+
+
+  if (
+    item.section === 1
+  ) {
+
+    renderPart1(
+      card,
+      item.data
+    );
+
+  }
+
+
+  else if (
+    item.section === 2
+  ) {
+
+    renderPart2(
+      card,
+      item.data
+    );
+
+  }
+
+
+  else {
+
+    renderPart3(
+      card,
+      item.data
+    );
+
+  }
+
+
+  updateNavigation();
+
+}
+
+
+/* =====================================================
+   TOP BAR
+   ===================================================== */
+
+function updateTopBar(item) {
+
+  let label =
+    'Bagian I — Menyimak dan Berbicara';
+
+  if (
+    item.section === 2
+  ) {
+
+    label =
+      'Bagian II — Benar atau Salah';
+
+  }
+
+
+  if (
+    item.section === 3
+  ) {
+
+    label =
+      'Bagian III — Melengkapi Kalimat';
+
+  }
+
+
+  document
+    .getElementById(
+      'sectionLabel'
+    )
+    .textContent =
+    label;
+
+
+  document
+    .getElementById(
+      'questionNumber'
+    )
+    .textContent =
+    'Soal ' +
+    (currentIndex + 1) +
+    ' / ' +
+    questions.length;
+
+
+  const progress =
+    (
+      (currentIndex + 1) /
+      questions.length
+    ) *
+    100;
+
+
+  document
+    .getElementById(
+      'progressFill'
+    )
+    .style
+    .width =
+    progress + '%';
+
+}
+
+
+/* =====================================================
+   PART 1
+   ===================================================== */
+
+function renderPart1(
+  card,
+  q
+) {
+
+  const recording =
+    answers
+      .part1Recordings[q.id];
+
+
+  const hasRecording =
+    !!(
+      recording &&
+      recording.fileId
+    );
+
+
+  const localUrl =
+    recording &&
+    recording.localUrl
+      ? recording.localUrl
+      : '';
+
+
+  card.innerHTML = `
+
+    <p class="instruction">
+      Dengarkan kalimat Mandarin berikut,
+      kemudian rekam suara Anda untuk
+      mengulanginya dengan benar.
+    </p>
+
+    <div class="question-chinese">
+      ${q.text}
+    </div>
+
+    <div class="question-pinyin">
+      ${q.pinyin}
+    </div>
+
+    <button
+      type="button"
+      id="playQuestionAudio"
+      class="audio-button"
+    >
+      🔊 Dengarkan Kalimat
+    </button>
+
+
+    <div class="record-area">
+
+      <div class="record-title">
+        🎙️ Rekam Jawaban Anda
+      </div>
+
+      <div
+        id="recordStatus"
+        class="record-status"
+      >
+        ${
+          hasRecording
+            ? '✓ Rekaman sudah tersimpan'
+            : 'Belum ada rekaman'
+        }
+      </div>
+
+      <div class="record-buttons">
+
+        <button
+          type="button"
+          id="recordButton"
+          class="record-button"
+          ${submitted ? 'disabled' : ''}
+        >
+          ● Mulai Rekam
+        </button>
+
+        <button
+          type="button"
+          id="stopButton"
+          class="record-button stop"
+          disabled
+        >
+          ■ Berhenti
+        </button>
+
+      </div>
+
+
+      <div id="timerText"
+           style="margin-top:12px;font-weight:800;">
+      </div>
+
+
+      ${
+        localUrl
+          ? `
+            <audio
+              id="recordedAudio"
+              controls
+              src="${localUrl}"
+            ></audio>
+          `
+          : `
+            <audio
+              id="recordedAudio"
+              controls
+              style="display:none;"
+            ></audio>
+          `
+      }
+
+    </div>
+
+  `;
+
+
+  document
+    .getElementById(
+      'playQuestionAudio'
+    )
+    .addEventListener(
+      'click',
+      function() {
+
+        speakChinese(
+          q.text
+        );
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      'recordButton'
+    )
+    .addEventListener(
+      'click',
+      function() {
+
+        startRecording(
+          q.id
+        );
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      'stopButton'
+    )
+    .addEventListener(
+      'click',
+      stopRecording
+    );
+
+}
+
+
+/* =====================================================
+   PART 2
+   ===================================================== */
+
+function renderPart2(
+  card,
+  q
+) {
+
+  const selected =
+    answers
+      .part2Answers[q.id];
+
+
+  const src =
+    imageData[q.id] ||
+    q.fallbackUrl ||
+    '';
+
+
+  card.innerHTML = `
+
+    <p class="instruction">
+      Dengarkan audio kemudian tentukan
+      apakah audio tersebut sesuai dengan gambar.
+    </p>
+
+
+    <button
+      type="button"
+      id="playQuestionAudio"
+      class="audio-button"
+    >
+      🔊 Dengarkan Audio
+    </button>
+
+
+    <div class="image-box">
+
+      <img
+        id="questionImage"
+        class="question-image"
+        src="${src}"
+        alt="${q.imageDesc}"
+      >
+
+    </div>
+
+
+    <div
+      style="
+        text-align:center;
+        color:#697283;
+        margin-bottom:8px;
+      "
+    >
+      Apakah audio sesuai dengan gambar?
+    </div>
+
+
+    <div class="answer-grid">
+
+      <button
+        type="button"
+        class="answer-button ${
+          selected === true
+            ? 'selected'
+            : ''
+        }"
+        id="trueButton"
+      >
+        BENAR
+      </button>
+
+
+      <button
+        type="button"
+        class="answer-button ${
+          selected === false
+            ? 'selected'
+            : ''
+        }"
+        id="falseButton"
+      >
+        SALAH
+      </button>
+
+    </div>
+
+  `;
+
+
+  document
+    .getElementById(
+      'playQuestionAudio'
+    )
+    .addEventListener(
+      'click',
+      function() {
+
+        speakChinese(
+          q.audio
+        );
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      'trueButton'
+    )
+    .addEventListener(
+      'click',
+      function() {
+
+        answers
+          .part2Answers[q.id] =
+          true;
+
+        renderQuestion();
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      'falseButton'
+    )
+    .addEventListener(
+      'click',
+      function() {
+
+        answers
+          .part2Answers[q.id] =
+          false;
+
+        renderQuestion();
+
+      }
+    );
+
+}
+
+
+/* =====================================================
+   PART 3
+   ===================================================== */
+
+function renderPart3(
+  card,
+  q
+) {
+
+  const selected =
+    answers
+      .part3Answers[q.id] ||
+    '';
+
+
+  let sentence =
+    q.sentence.replace(
+      '{blank}',
+      '<span class="blank">?</span>'
+    );
+
+
+  const options =
+    examData.part3.options;
+
+
+  card.innerHTML = `
+
+    <p class="instruction">
+      Lengkapi kalimat berikut dengan
+      memilih jawaban yang paling tepat.
+    </p>
+
+
+    <div class="sentence-box">
+
+      <div class="sentence">
+        ${sentence}
+      </div>
+
+      <div
+        style="
+          margin-top:15px;
+          color:#727b8b;
+          font-size:16px;
+          font-style:italic;
+        "
+      >
+        ${q.pinyin}
+      </div>
+
+    </div>
+
+
+    <div class="options-grid">
+
+      ${options.map(
+        function(option) {
+
+          return `
+
+            <button
+              type="button"
+              class="option-button ${
+                selected === option.id
+                  ? 'selected'
+                  : ''
+              }"
+              data-option="${option.id}"
+            >
+
+              <strong>
+                ${option.id.toUpperCase()}.
+              </strong>
+
+              ${option.text}
+
+              <span class="option-pinyin">
+                ${option.pinyin}
+              </span>
+
+            </button>
+
+          `;
+
+        }
+      ).join('')}
+
+    </div>
+
+  `;
+
+
+  document
+    .querySelectorAll(
+      '.option-button'
+    )
+    .forEach(
+      function(button) {
+
+        button.addEventListener(
+          'click',
+          function() {
+
+            answers
+              .part3Answers[q.id] =
+              this.dataset.option;
+
+            renderQuestion();
+
+          }
+        );
+
+      }
+    );
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+   ===================================================== */
+
+function updateNavigation() {
+
+  const previous =
+    document
+      .getElementById(
+        'previousButton'
+      );
+
+
+  const next =
+    document
+      .getElementById(
+        'nextButton'
+      );
+
+
+  previous.disabled =
+    currentIndex === 0;
+
+
+  if (
+    currentIndex ===
+    questions.length - 1
+  ) {
+
+    next.textContent =
+      'Selesai & Simpan Jawaban';
+
+  } else {
+
+    next.textContent =
+      'Berikutnya →';
+
+  }
+
+}
+
+
+/* =====================================================
+   PREVIOUS
+   ===================================================== */
+
+function previousQuestion() {
+
+  if (
+    currentIndex <= 0
+  ) {
+    return;
+  }
+
+
+  if (mediaRecorder) {
+
+    showToast(
+      'Hentikan rekaman terlebih dahulu.'
+    );
+
+    return;
+  }
+
+
+  currentIndex--;
+
+  renderQuestion();
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+
+}
+
+
+/* =====================================================
+   NEXT
+   ===================================================== */
+
+function nextQuestion() {
+
+  if (mediaRecorder) {
+
+    showToast(
+      'Hentikan rekaman terlebih dahulu.'
+    );
+
+    return;
+  }
+
+
+  const item =
+    questions[currentIndex];
+
+
+  /*
+   * Bagian II harus memilih jawaban.
+   */
+
+  if (
+    item.section === 2 &&
+    answers
+      .part2Answers[item.number] ===
+      undefined
+  ) {
+
+    showToast(
+      'Pilih BENAR atau SALAH terlebih dahulu.'
+    );
+
+    return;
+  }
+
+
+  /*
+   * Bagian III harus memilih jawaban.
+   */
+
+  if (
+    item.section === 3 &&
+    !answers
+      .part3Answers[item.number]
+  ) {
+
+    showToast(
+      'Pilih jawaban terlebih dahulu.'
+    );
+
+    return;
+  }
+
+
+  /*
+   * Soal terakhir
+   */
+
+  if (
+    currentIndex ===
+    questions.length - 1
+  ) {
+
+    finishExam();
+
+    return;
+  }
+
+
+  currentIndex++;
+
+  renderQuestion();
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+
+}
+
+
+/* =====================================================
+   RECORDING
+   ===================================================== */
+
+
+async function startRecording(questionId) {
+  // Pastikan browser mendukung perekaman.
+  if (
+    !navigator.mediaDevices ||
+    typeof navigator.mediaDevices.getUserMedia !== 'function'
+  ) {
+    showToast(
+      'Akses mikrofon tidak tersedia. Buka aplikasi melalui URL HTTPS resmi dan gunakan Chrome atau Edge terbaru.'
+    );
+    return;
+  }
+
+  if (typeof window.MediaRecorder === 'undefined') {
+    showToast(
+      'Browser tidak mendukung perekaman audio. Gunakan Chrome atau Edge terbaru.'
+    );
+    return;
+  }
+
+  // Jangan mulai rekaman baru ketika masih merekam.
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+    showToast('Rekaman sedang berlangsung. Hentikan terlebih dahulu.');
+    return;
+  }
+
+  // getUserMedia membutuhkan secure context.
+  if (!window.isSecureContext) {
+    showToast(
+      'Halaman tidak aman untuk mengakses mikrofon. Buka aplikasi melalui URL HTTPS.'
+    );
+    return;
+  }
+
+  try {
+    // Minta akses mikrofon dari browser.
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: true
+    });
+
+    mediaStream = stream;
+    recordingQuestionId = questionId;
+    recordingChunks = [];
+
+    // Gunakan format audio yang didukung browser.
+    const mimeType = getSupportedMimeType();
+
+    if (mimeType) {
+      mediaRecorder = new MediaRecorder(stream, {
+        mimeType: mimeType
+      });
+    } else {
+      mediaRecorder = new MediaRecorder(stream);
+    }
+
+    mediaRecorder.ondataavailable = function(event) {
+      if (event.data && event.data.size > 0) {
+        recordingChunks.push(event.data);
+      }
+    };
+
+    mediaRecorder.onerror = function(event) {
+      console.error('Kesalahan MediaRecorder:', event.error || event);
+      showToast('Terjadi kesalahan saat merekam suara.');
+    };
+
+    mediaRecorder.onstop = function() {
+      const recorder = mediaRecorder;
+      const currentQuestionId = recordingQuestionId;
+
+      const mime = recorder && recorder.mimeType
+        ? recorder.mimeType
+        : 'audio/webm';
+
+      const blob = new Blob(recordingChunks, {
+        type: mime
+      });
+
+      // Matikan mikrofon setelah rekaman berhenti.
+      if (mediaStream) {
+        mediaStream.getTracks().forEach(function(track) {
+          track.stop();
+        });
+      }
+
+      mediaStream = null;
+      mediaRecorder = null;
+      recordingQuestionId = null;
+
+      if (!blob.size) {
+        updateRecordingUI(false);
+        showToast('Rekaman kosong. Silakan coba rekam kembali.');
+        return;
+      }
+
+      const localUrl = URL.createObjectURL(blob);
+
+      answers.part1Recordings[currentQuestionId] = {
+        fileId: '',
+        localUrl: localUrl,
+        uploaded: false
+      };
+
+      // Tampilkan pemutar audio untuk memeriksa rekaman.
+      const audio = document.getElementById('recordedAudio');
+
+      if (audio) {
+        audio.src = localUrl;
+        audio.style.display = 'block';
+      }
+
+      const status = document.getElementById('recordStatus');
+
+      if (status) {
+        status.textContent = 'Rekaman selesai. Menyimpan...';
+      }
+
+      updateRecordingUI(false);
+
+      // Simpan rekaman ke Google Drive melalui Code.gs.
+      uploadRecordingBlob(currentQuestionId, blob);
+    };
+
+    // Mulai merekam.
+    mediaRecorder.start();
+
+    recordingSeconds = 0;
+    updateRecordingUI(true);
+
+    if (recordingTimer) {
+      clearInterval(recordingTimer);
+    }
+
+    recordingTimer = setInterval(function() {
+      recordingSeconds++;
+
+      const timer = document.getElementById('timerText');
+
+      if (timer) {
+        timer.textContent = 'Waktu rekam: ' + recordingSeconds + ' detik';
+      }
+
+      // Maksimal 30 detik per soal.
+      if (recordingSeconds >= 30) {
+        stopRecording();
+      }
+    }, 1000);
+
+  } catch (error) {
+    console.error('Detail kesalahan mikrofon:', error);
+    console.error('Nama kesalahan:', error.name);
+    console.error('Pesan kesalahan:', error.message);
+
+    // Jika inisialisasi gagal setelah mikrofon aktif,
+    // pastikan mikrofon dilepaskan.
+    if (mediaStream) {
+      mediaStream.getTracks().forEach(function(track) {
+        track.stop();
+      });
+    }
+
+    mediaStream = null;
+    mediaRecorder = null;
+    recordingQuestionId = null;
+
+    updateRecordingUI(false);
+
+    let message = 'Mikrofon gagal digunakan.';
+
+    switch (error.name) {
+      case 'NotAllowedError':
+      case 'PermissionDeniedError':
+      case 'SecurityError':
+        message =
+          'Izin mikrofon ditolak atau diblokir browser. Izinkan mikrofon melalui pengaturan situs, lalu muat ulang halaman.';
+        break;
+
+      case 'NotFoundError':
+      case 'DevicesNotFoundError':
+        message =
+          'Mikrofon tidak ditemukan. Periksa apakah perangkat memiliki mikrofon atau headset yang terhubung.';
+        break;
+
+      case 'NotReadableError':
+      case 'TrackStartError':
+        message =
+          'Mikrofon sedang digunakan aplikasi lain atau tidak dapat diakses. Tutup aplikasi yang menggunakan mikrofon, lalu coba kembali.';
+        break;
+
+      case 'OverconstrainedError':
+        message =
+          'Pengaturan perangkat audio tidak didukung. Periksa perangkat mikrofon yang digunakan.';
+        break;
+
+      case 'AbortError':
+        message =
+          'Akses mikrofon terhenti. Coba kembali dan pastikan perangkat audio siap digunakan.';
+        break;
+
+      default:
+        message =
+          'Mikrofon gagal digunakan (' +
+          (error.name || 'kesalahan tidak diketahui') +
+          '). Buka Console browser untuk melihat detailnya.';
+    }
+
+    showToast(message);
+  }
+}
+
+
+/* =====================================================
+   STOP RECORDING
+   ===================================================== */
+
+function stopRecording() {
+
+  if (
+    recordingTimer
+  ) {
+
+    clearInterval(
+      recordingTimer
+    );
+
+    recordingTimer =
+      null;
+
+  }
+
+
+  if (
+    mediaRecorder &&
+    mediaRecorder.state !==
+      'inactive'
+  ) {
+
+    mediaRecorder.stop();
+
+  }
+
+
+  updateRecordingUI(
+    false
+  );
+
+}
+
+
+/* =====================================================
+   RECORDING UI
+   ===================================================== */
+
+function updateRecordingUI(
+  recording
+) {
+
+  const recordButton =
+    document
+      .getElementById(
+        'recordButton'
+      );
+
+
+  const stopButton =
+    document
+      .getElementById(
+        'stopButton'
+      );
+
+
+  if (recordButton) {
+
+    recordButton.disabled =
+      recording;
+
+  }
+
+
+  if (stopButton) {
+
+    stopButton.disabled =
+      !recording;
+
+  }
+
+
+  const status =
+    document
+      .getElementById(
+        'recordStatus'
+      );
+
+
+  if (
+    status &&
+    recording
+  ) {
+
+    status.textContent =
+      '● Sedang merekam...';
+
+  }
+
+}
+
+
+/* =====================================================
+   MIME TYPE
+   ===================================================== */
+
+function getSupportedMimeType() {
+
+  const types = [
+
+    'audio/webm;codecs=opus',
+
+    'audio/webm',
+
+    'audio/ogg;codecs=opus',
+
+    'audio/mp4'
+
+  ];
+
+
+  for (
+    const type of types
+  ) {
+
+    if (
+      MediaRecorder
+        .isTypeSupported &&
+      MediaRecorder
+        .isTypeSupported(
+          type
+        )
+    ) {
+
+      return type;
+
+    }
+
+  }
+
+
+  return '';
+
+}
+
+
+/* =====================================================
+   UPLOAD RECORDING
+   ===================================================== */
+
+function uploadRecordingBlob(
+  questionId,
+  blob
+) {
+
+  uploadingCount++;
+
+
+  showToast(
+    'Menyimpan rekaman soal ' +
+    questionId +
+    '...'
+  );
+
+
+  const reader =
+    new FileReader();
+
+
+  reader.onloadend =
+    function() {
+
+      const base64 =
+        reader.result;
+
+
+      google.script.run
+
+        .withSuccessHandler(
+          function(result) {
+
+            uploadingCount--;
+
+
+            if (
+              answers
+                .part1Recordings[
+                  questionId
+                ]
+            ) {
+
+              answers
+                .part1Recordings[
+                  questionId
+                ]
+                .fileId =
+                result.fileId;
+
+
+              answers
+                .part1Recordings[
+                  questionId
+                ]
+                .uploaded =
+                true;
+
+            }
+
+
+            /*
+             * Jika masih berada di soal yang sama,
+             * update tampilan.
+             */
+
+            const current =
+              questions[
+                currentIndex
+              ];
+
+
+            if (
+              current &&
+              current.section === 1 &&
+              current.number ===
+                questionId
+            ) {
+
+              const status =
+                document
+                  .getElementById(
+                    'recordStatus'
+                  );
+
+
+              if (status) {
+
+                status.textContent =
+                  '✓ Rekaman sudah tersimpan';
+
+              }
+
+            }
+
+
+            showToast(
+              'Rekaman soal ' +
+              questionId +
+              ' berhasil disimpan.'
+            );
+
+          }
+        )
+
+        .withFailureHandler(
+          function(error) {
+
+            uploadingCount--;
+
+
+            if (
+              answers
+                .part1Recordings[
+                  questionId
+                ]
+            ) {
+
+              answers
+                .part1Recordings[
+                  questionId
+                ]
+                .uploaded =
+                false;
+
+            }
+
+
+            showToast(
+              error.message ||
+              'Gagal menyimpan rekaman.'
+            );
+
+          }
+        )
+
+        .uploadRecording(
+          sessionId,
+          questionId,
+          base64,
+          blob.type
+        );
+
+    };
+
+
+  reader.readAsDataURL(
+    blob
+  );
+
+}
+
+
+/* =====================================================
+   FINISH EXAM
+   ===================================================== */
+
+function finishExam() {
+
+  if (submitted) {
+    return;
+  }
+
+
+  if (uploadingCount > 0) {
+
+    showToast(
+      'Tunggu sampai semua rekaman selesai disimpan.'
+    );
+
+    return;
+  }
+
+
+  /*
+   * Cari soal Bagian I yang belum
+   * mempunyai file rekaman.
+   */
+
+  const missingRecordings = [];
+
+
+  for (
+    let i = 1;
+    i <= 5;
+    i++
+  ) {
+
+    const record =
+      answers
+        .part1Recordings[i];
+
+
+    if (
+      !record ||
+      !record.fileId
+    ) {
+
+      missingRecordings.push(
+        i
+      );
+
+    }
+
+  }
+
+
+  if (
+    missingRecordings.length
+  ) {
+
+    const questionText =
+      missingRecordings.join(
+        ', '
+      );
+
+
+    const proceed =
+      confirm(
+        'Anda belum merekam jawaban pada soal nomor ' +
+        questionText +
+        '.\n\n' +
+        'Tetap lanjut?'
+      );
+
+
+    if (!proceed) {
+
+      return;
+    }
+
+  }
+
+
+  /*
+   * Konfirmasi terakhir.
+   */
+
+  const confirmed =
+    confirm(
+      'Apakah Anda yakin ingin menyelesaikan ujian dan menyimpan jawaban?'
+    );
+
+
+  if (!confirmed) {
+    return;
+  }
+
+
+  submitExam();
+
+}
+
+
+/* =====================================================
+   SUBMIT KE SERVER
+   ===================================================== */
+
+function submitExam() {
+
+  submitted =
+    true;
+
+
+  showLoading(
+    'Menyimpan jawaban ujian...'
+  );
+
+
+  const recordingIds = {};
+
+
+  Object.keys(
+    answers.part1Recordings
+  ).forEach(
+    function(key) {
+
+      const record =
+        answers
+          .part1Recordings[key];
+
+
+      if (
+        record &&
+        record.fileId
+      ) {
+
+        recordingIds[key] =
+          record.fileId;
+
+      }
+
+    }
+  );
+
+
+  const payload = {
+
+    sessionId:
+      sessionId,
+
+    part1Recordings:
+      recordingIds,
+
+    part2Answers:
+      answers.part2Answers,
+
+    part3Answers:
+      answers.part3Answers
+
+  };
+
+
+  google.script.run
+
+    .withSuccessHandler(
+      function(result) {
+
+        hideLoading();
+
+        disableExam();
+
+
+        document
+          .getElementById(
+            'resultPart1'
+          )
+          .textContent =
+          'Menunggu penilaian';
+
+
+        document
+          .getElementById(
+            'resultPart2'
+          )
+          .textContent =
+          result.part2 +
+          ' poin';
+
+
+        document
+          .getElementById(
+            'resultPart3'
+          )
+          .textContent =
+          result.part3 +
+          ' poin';
+
+
+        document
+          .getElementById(
+            'resultTotal'
+          )
+          .textContent =
+          result.total +
+          ' poin';
+
+
+        document
+          .getElementById(
+            'resultModal'
+          )
+          .classList
+          .remove(
+            'hidden'
+          );
+
+      }
+    )
+
+    .withFailureHandler(
+      function(error) {
+
+        submitted =
+          false;
+
+        hideLoading();
+
+
+        showToast(
+          error.message ||
+          'Jawaban gagal disimpan.'
+        );
+
+      }
+    )
+
+    .submitExam(
+      payload
+    );
+
+}
+
+
+/* =====================================================
+   DISABLE EXAM
+   ===================================================== */
+
+function disableExam() {
+
+  document
+    .querySelectorAll(
+      '#questionCard button'
+    )
+    .forEach(
+      function(button) {
+
+        button.disabled =
+          true;
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      'nextButton'
+    )
+    .disabled =
+    true;
+
+
+  document
+    .getElementById(
+      'previousButton'
+    )
+    .disabled =
+    true;
+
+}
+
+
+/* =====================================================
+   RESULT MODAL
+   ===================================================== */
+
+function closeResult() {
+
+  document
+    .getElementById(
+      'resultModal'
+    )
+    .classList
+    .add(
+      'hidden'
+    );
+
+}
+
+
+/* =====================================================
+   LOADING
+   ===================================================== */
+
+function showLoading(
+  text
+) {
+
+  document
+    .getElementById(
+      'loadingText'
+    )
+    .textContent =
+    text ||
+    'Memproses...';
+
+
+  document
+    .getElementById(
+      'loadingOverlay'
+    )
+    .classList
+    .remove(
+      'hidden'
+    );
+
+}
+
+
+function hideLoading() {
+
+  document
+    .getElementById(
+      'loadingOverlay'
+    )
+    .classList
+    .add(
+      'hidden'
+    );
+
+}
+
+
+/* =====================================================
+   TOAST
+   ===================================================== */
+
+let toastTimer = null;
+
+
+function showToast(
+  message
+) {
+
+  const toast =
+    document
+      .getElementById(
+        'toast'
+      );
+
+
+  toast.textContent =
+    message;
+
+
+  toast.classList
+    .remove(
+      'hidden'
+    );
+
+
+  if (toastTimer) {
+
+    clearTimeout(
+      toastTimer
+    );
+
+  }
+
+
+  toastTimer =
+    setTimeout(
+      function() {
+
+        toast.classList
+          .add(
+            'hidden'
+          );
+
+      },
+      3500
+    );
+
+}
+
+
+/* =====================================================
+   PREVENT ACCIDENTAL REFRESH
+   ===================================================== */
+
+window.addEventListener(
+  'beforeunload',
+  function(event) {
+
+    if (
+      !submitted &&
+      sessionId
+    ) {
+
+      event.preventDefault();
+
+      event.returnValue =
+        '';
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
