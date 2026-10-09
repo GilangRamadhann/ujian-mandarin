@@ -1626,73 +1626,200 @@
    BRIDGE GITHUB PAGES <-> GOOGLE APPS SCRIPT
    Mempertahankan pola google.script.run dari halaman asli.
    ===================================================== */
-const GAS_BRIDGE_ORIGIN = 'https://script.google.com';
+
 const gasBridgeFrame = document.getElementById('gasBridge');
 const gasPendingCalls = new Map();
+
 let gasCallCounter = 0;
 let gasBridgeReady = false;
+let gasReadyPromise = null;
 
-function gasCall(method, args) {
-  return new Promise((resolve, reject) => {
+function ensureGasBridgeReady() {
+  if (gasBridgeReady) {
+    return Promise.resolve();
+  }
+
+  if (gasReadyPromise) {
+    return gasReadyPromise;
+  }
+
+  gasReadyPromise = new Promise((resolve, reject) => {
     if (!gasBridgeFrame || !gasBridgeFrame.contentWindow) {
-      reject(new Error('Koneksi ke server ujian belum tersedia. Muat ulang halaman.'));
+      gasReadyPromise = null;
+      reject(new Error(
+        'Bridge ujian tidak ditemukan. Periksa iframe gasBridge.'
+      ));
       return;
     }
-    const id = 'rpc-' + Date.now() + '-' + (++gasCallCounter);
-    const timeout = setTimeout(() => {
-      gasPendingCalls.delete(id);
-      reject(new Error('Server terlalu lama merespons. Periksa koneksi lalu coba lagi.'));
-    }, 120000);
-    gasPendingCalls.set(id, { resolve, reject, timeout });
+
+    const startedAt = Date.now();
+
+    const pingTimer = setInterval(() => {
+      if (gasBridgeReady) {
+        clearInterval(pingTimer);
+        clearTimeout(timeoutTimer);
+        resolve();
+        return;
+      }
+
+      if (Date.now() - startedAt >= 15000) {
+        clearInterval(pingTimer);
+        clearTimeout(timeoutTimer);
+        gasReadyPromise = null;
+        reject(new Error(
+          'Bridge Apps Script belum siap. Periksa URL dan deployment Bridge.html.'
+        ));
+        return;
+      }
+
+      gasBridgeFrame.contentWindow.postMessage({
+        channel: 'mandarin-exam',
+        type: 'ping'
+      }, '*');
+    }, 300);
+
+    const timeoutTimer = setTimeout(() => {
+      clearInterval(pingTimer);
+      gasReadyPromise = null;
+
+      reject(new Error(
+        'Tidak dapat terhubung ke Bridge Apps Script dalam 15 detik.'
+      ));
+    }, 15000);
+
+    // Kirim ping pertama tanpa menunggu interval.
     gasBridgeFrame.contentWindow.postMessage({
-      channel: 'mandarin-exam', type: 'rpc', id, method, args
+      channel: 'mandarin-exam',
+      type: 'ping'
     }, '*');
   });
+
+  return gasReadyPromise;
 }
 
 window.addEventListener('message', event => {
-  if (!gasBridgeFrame || event.source !== gasBridgeFrame.contentWindow) return;
+  if (!gasBridgeFrame ||
+      event.source !== gasBridgeFrame.contentWindow) {
+    return;
+  }
+
   const msg = event.data;
-  if (!msg || msg.channel !== 'mandarin-exam' || msg.type !== 'rpc-result') return;
+
+  if (!msg || msg.channel !== 'mandarin-exam') return;
+
+  if (msg.type === 'bridge-ready') {
+    gasBridgeReady = true;
+    return;
+  }
+
+  if (msg.type !== 'rpc-result') return;
+
   const pending = gasPendingCalls.get(msg.id);
   if (!pending) return;
+
   clearTimeout(pending.timeout);
   gasPendingCalls.delete(msg.id);
-  if (msg.success) pending.resolve(msg.result);
-  else pending.reject(new Error(msg.error || 'Permintaan ke server gagal.'));
+
+  if (msg.success) {
+    pending.resolve(msg.result);
+  } else {
+    pending.reject(new Error(
+      msg.error || 'Permintaan ke server gagal.'
+    ));
+  }
 });
 
+function gasCall(method, args) {
+  return ensureGasBridgeReady().then(() => {
+    return new Promise((resolve, reject) => {
+      const id = 'rpc-' + Date.now() + '-' + (++gasCallCounter);
+
+      const timeout = setTimeout(() => {
+        gasPendingCalls.delete(id);
+
+        reject(new Error(
+          'Server terlalu lama merespons saat menjalankan ' +
+          method + '. Periksa Apps Script > Executions.'
+        ));
+      }, 120000);
+
+      gasPendingCalls.set(id, {
+        resolve,
+        reject,
+        timeout
+      });
+
+      gasBridgeFrame.contentWindow.postMessage({
+        channel: 'mandarin-exam',
+        type: 'rpc',
+        id,
+        method,
+        args: args || []
+      }, '*');
+    });
+  });
+}
+
 function createGoogleScriptRunner() {
-  const state = { success: null, failure: null };
+  const state = {
+    success: null,
+    failure: null
+  };
+
   let runner;
+
   runner = new Proxy({}, {
     get(_target, property) {
-      if (property === 'withSuccessHandler') return fn => { state.success = fn; return runner; };
-      if (property === 'withFailureHandler') return fn => { state.failure = fn; return runner; };
-      if (property === 'withUserObject') return () => runner;
-      if (typeof property !== 'string') return undefined;
+      if (property === 'withSuccessHandler') {
+        return fn => {
+          state.success = fn;
+          return runner;
+        };
+      }
+
+      if (property === 'withFailureHandler') {
+        return fn => {
+          state.failure = fn;
+          return runner;
+        };
+      }
+
+      if (property === 'withUserObject') {
+        return () => runner;
+      }
+
+      if (typeof property !== 'string') {
+        return undefined;
+      }
+
       return (...args) => {
-        gasCall(property, args).then(result => {
-          if (typeof state.success === 'function') state.success(result);
-        }).catch(error => {
-          if (typeof state.failure === 'function') state.failure(error);
-          else console.error('Apps Script bridge:', error);
-        });
+        gasCall(property, args)
+          .then(result => {
+            if (typeof state.success === 'function') {
+              state.success(result);
+            }
+          })
+          .catch(error => {
+            if (typeof state.failure === 'function') {
+              state.failure(error);
+            } else {
+              console.error('Apps Script bridge:', error);
+            }
+          });
       };
     }
   });
+
   return runner;
 }
 
-// Adapter agar fungsi peserta yang lama tidak perlu ditulis ulang satu per satu.
 window.google = window.google || {};
 window.google.script = window.google.script || {};
+
 Object.defineProperty(window.google.script, 'run', {
-  configurable: true, get: createGoogleScriptRunner
+  configurable: true,
+  get: createGoogleScriptRunner
 });
-
-
-
 
 /* =====================================================
    STATE
